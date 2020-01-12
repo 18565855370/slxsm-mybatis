@@ -1,8 +1,13 @@
 package com.slxsm.mybatis.mapper;
 
+import com.slxsm.mybatis.domain.UserFindDTO;
 import com.slxsm.mybatis.domain.UserModel;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author slxsm
@@ -10,11 +15,17 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    int insertUser(UserModel model);
+    UserModel getByName(String name);
 
-    int updateUser(UserModel model);
+    List<UserModel> getByMap(Map<String, Object> map);
 
-    int deleteUser(Long userId);
+    List<UserModel> getListByUserFindDTO(UserFindDTO userFindDTO);
 
-    List<UserModel> getUserList();
+    List<UserModel> getByIdOrName(Long id, String name);
+
+    UserModel getListByUserFindDTO(@Param("userId") Long id, @Param("userName") String name);
+
+    List<UserModel> getListByIdCollection(Collection<Long> idCollection);
+
+    void getList(ResultHandler<UserModel> resultHandler);
 }

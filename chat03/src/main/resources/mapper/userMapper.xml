@@ -3,20 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.slxsm.mybatis.mapper.UserMapper">
 
-    <insert id="insertUser" parameterType="com.slxsm.mybatis.domain.UserModel">
-        <![CDATA[
-        INSERT INTO t_user (id,name,age,salary,sex) VALUES(#{id},#{name},#{age},#{salary},#{sex})
-        ]]>
-    </insert>
-    <update id="updateUser" parameterType="com.slxsm.mybatis.domain.UserModel">
-        <![CDATA[UPDATE t_user SET name = #{name}, age = #{age}, salary = #{salary}, sex = #{sex} WHERE id = #{id}]]>
-    </update>
+    <select id="getByName" resultType="com.slxsm.mybatis.domain.UserModel">
+        <![CDATA[SELECT * FROM t_user WHERE name = #{value} LIMIT 1]]>
+    </select>
     
-    <delete id="deleteUser" parameterType="java.lang.Long">
-        <![CDATA[DELETE FROM t_user WHERE id = #{id}]]>
-    </delete>
-    
-    <select id="getUserList" resultType="com.slxsm.mybatis.domain.UserModel">
+    <select id="getByMap" resultType="com.slxsm.mybatis.domain.UserModel">
+        <![CDATA[SELECT * FROM t_user WHERE id = #{id} OR name = #{name}]]>
+    </select>
+
+    <select id="getListByUserFindDTO" parameterType="com.slxsm.mybatis.domain.UserFindDTO" resultType="com.slxsm.mybatis.domain.UserModel">
+        <![CDATA[SELECT * FROM t_user WHERE id = #{userId} OR name = #{userName}]]>
+    </select>
+
+    <select id="getByIdOrName" resultType="com.slxsm.mybatis.domain.UserFindDTO">
+        <![CDATA[SELECT * FROM t_user WHERE id = #{arg0} OR name = #{arg1}]]>
+    </select>
+
+    <select id="getListByIdCollection" resultType="com.slxsm.mybatis.domain.UserModel">
+        <![CDATA[SELECT * FROM t_user WHERE id in (#{collection[0]},#{collection[1]})]]>
+    </select>
+
+    <select id="getList" resultType="com.slxsm.mybatis.domain.UserModel">
         <![CDATA[SELECT * FROM t_user]]>
     </select>
 </mapper>
